@@ -55,7 +55,7 @@ async def on_message(message):
     async with message.channel.typing():
         # Generate Response
         print('generating response...')
-        response = query(f"Respond with only the translation of this message from {lang} to english: {message.content}")
+        response = query(f"Respond with only the translation of this message to its english meaning: {message.content}")
         print('response generated')
         if response == '':
             response = "shitted"
