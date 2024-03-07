@@ -34,13 +34,18 @@ async def on_message(message):
     if len(message.attachments) > 0:
         return
 
-    lang = detect(message.content)
+    try:
+        lang = detect(message.content) #sometimes this dies if no words
+    except Exception as e:
+        print(e)
+        return
 
     if lang == 'en':
         return
     
-    # if content has a non latin character or number, and is super short, die
-    if message.content.isalnum() and len(message.content.split(" ")) < 2:
+    # if content has a non ascii character and is super short, die
+    split = message.content.split(" ")
+    if not (any([ord(c) > 255 for c in message.content])) and len(split) <= 3:
         return
     
     print(detect_langs(message.content))
